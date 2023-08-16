@@ -18,7 +18,7 @@
 ###################################################################################
 
 {
-    "name": "Twilio WhatsApp Integration",
+    "name": "Discount Total Sales and Invoicee",
     "version": "16.0.0",
     "summary": """
     
