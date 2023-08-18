@@ -36,6 +36,8 @@
     'data':[
        'views/sale_view.xml',
        'views/account_view.xml',
+       'report/sale_report.xml',
+       'report/account_report.xml',
 
         ],
     "images": [],
