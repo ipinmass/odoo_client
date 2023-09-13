@@ -16,6 +16,7 @@
         ],
     "data": [
        'views/sale_view.xml',
+       'report/sale_report.xml'
 
     ],
     "images": [],
