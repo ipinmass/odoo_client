@@ -3,11 +3,17 @@
 <template id="sale_report_discount_all" inherit_id="sale.report_saleorder_document">
     <xpath expr="//div[@id='total']//t[@t-set='tax_totals']" position="before">
         <tr class="border-black o_total">
-                <td><strong>Subtotal</strong></td>
-                <td class="text-end">
-                    <span t-field="doc.undiscounted_total"/>
-                </td>
-            </tr>
+            <td><strong>Subtotal</strong></td>
+            <td class="text-end">
+                <span t-field="doc.undiscounted_total"/>
+            </td>
+         </tr>
+         <tr class="border-black o_total">
+            <td><strong>Total Discount</strong></td>
+            <td class="text-end">
+                <span t-field="doc.total_discount"/>
+            </td>
+         </tr>
     </xpath>
 </template>
 
