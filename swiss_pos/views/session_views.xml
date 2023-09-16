@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="session_custom_view" model="ir.ui.view">
+            <field name="name">pos.session.custom.view</field>
+            <field name="model">pos.session</field>
+            <field name="inherit_id" ref="point_of_sale.view_pos_session_form"/>
+            <field name="arch" type="xml">
+                <xpath expr="//header" position="inside">
+                    <button name="print_report_cashier"
+                            type="object"
+                            string="Print Cashier Deposit"
+                            attrs="{'invisible' : [('state', 'in', ['opening_control', 'opened'])]}"/>
+                </xpath>
+            </field>
+        </record>
+        
+</odoo>

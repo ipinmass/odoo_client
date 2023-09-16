@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_cashier_document">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <t t-set="alpages" t-value="len(docs)"/>
+                    <t t-set="currentpage" t-value="0"/>
+                    <t t-foreach="docs" t-as="doc">
+                        <t t-set="currentpage" t-value="currentpage+1"/>
+                        <table class="table table-sm o_main_table table-borderless">
+                            <tr>
+                                <td>
+                                    <div t-field="doc.config_id.receipt_header" class="col-md-4 m-3"/>
+                                </td>
+                                <td>
+                                    <ul class="list-inline">
+                                        <li class="list-inline-item">Hal. <span t-esc="currentpage"/>/<span t-esc="alpages"/> </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                        </table>
+                        <div class="row">
+                            <div class="text-center" style="font-size: 24px; font-weight:bold">BUKTI STORAN KASIR</div>
+                        </div>
+                        <div class="row mt-4 col-12">
+                            <div class="col-4"><strong>Tanggal: </strong> <span t-field="doc.start_at" t-options="{'widget': 'date'}"/></div>
+                            <div class="col-4"><strong>Nama Kasir: </strong> <span t-field="doc.user_id"/></div>
+                            <div class="col-4"><strong>Outlet  : </strong> <span t-esc="doc.config_id.name"/></div>
+                        </div> 
+                        <table class="table table-sm o_main_table table-bordered">
+                            <thead style="display: table-row-group">
+                                <tr>
+                                    <th class="text-center" style="width: 5%">No</th>
+                                    <th class="text-center">Kode Bayar</th>
+                                    <th class="text-center col-3">Nama Bayar</th>
+                                    <th class="text-center col-2">Setor</th>
+                                    <th class="text-center col-2">Nilai Transaksi</th>
+                                    <th class="text-center col-2">Selisih</th>
+                                    
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr t-foreach="doc._get_line_report_cashier()" t-as="line">
+                                    <td><span t-esc="line.get('sequence')"/></td>
+                                    <td><span></span></td>
+                                    <td><span t-esc="line.get('name')"/></td>
+                                    <td class="text-end"><span t-esc="'{:,.2f}'.format(line.get('deposit', 0.0))"/></td>
+                                    <td class="text-end"><span t-esc="'{:,.2f}'.format(line.get('transaction', 0.0))"/></td>
+                                    <td class="text-end"><span t-esc="'{:,.2f}'.format(line.get('diff', 0.0))"/></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-sm o_main_table table-borderless mt-4">
+                                <tr>
+                                    <td class="col-6 text-center">
+                                        Diterima Oleh, <br/><br/><br/><br/><br/><br/><br/><br/>
+                                        (__________________)
+                                    </td>
+                                    <td class="col-6 text-center">
+                                        Diserahkan Oleh, <br/><br/><br/><br/><br/><br/><br/><br/>
+                                        (__________________)
+                                    </td>
+                                    
+                                </tr>
+                        </table>
+                        <div class="row">
+                            <div class="text-end col-12">
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%A, %d %B %Y %H:%M')"/>
+                            </div>
+                        </div>
+                        
+
+                    </t>
+                </div>
+            </t>
+            
+        </template>
+
+        <record id="paperformat_euro_narrow_margin_a4" model="report.paperformat">
+            <field name="name">European A4 without borders</field>
+            <field name="default" eval="False" />
+            <field name="format">A4</field>
+            <field name="orientation">Portrait</field>
+            <field name="margin_top">3</field>
+            <field name="margin_bottom">3</field>
+            <field name="margin_left">3</field>
+            <field name="margin_right">3</field>
+            <field name="header_line" eval="False" />
+            <field name="header_spacing">0</field>
+        </record>
+
+        <record id="action_report_cashier_document" model="ir.actions.report">
+            <field name="name">Report Cashier Deposit</field>
+            <field name="model">pos.session</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">swiss_pos.report_cashier_document</field>
+            <field name="report_file">swiss_pos.report_cashier_document</field>
+            <field name="print_report_name">'Report Cashier Deposit - %s' % object.name</field>
+            <field name="paperformat_id" ref="paperformat_euro_narrow_margin_a4"/>
+            <field name="binding_model_id" ref="model_pos_session"/>
+            <field name="binding_type">report</field>
+        </record>
+</data>
+</odoo>

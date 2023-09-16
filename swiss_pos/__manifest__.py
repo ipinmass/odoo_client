@@ -32,8 +32,8 @@
             "point_of_sale",
         ],
     'data':[
-       
-
+        'views/session_views.xml',
+        'report/report_cashier.xml',
         ],
     "images": [],
     'assets': {
