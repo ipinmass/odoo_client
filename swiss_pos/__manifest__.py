@@ -33,6 +33,7 @@
         ],
     'data':[
         'views/session_views.xml',
+        'views/payment_method.xml',
         'report/report_cashier.xml',
         ],
     "images": [],
