@@ -27,8 +27,8 @@
                         <div class="row mt-4 col-12">
                             <div class="col-4"><strong>Tanggal: </strong> <span t-field="doc.start_at" t-options="{'widget': 'date'}"/></div>
                             <div class="col-4"><strong>Nama Kasir: </strong> <span t-field="doc.user_id"/></div>
-                            <div class="col-4"><strong>Outlet  : </strong> <span t-esc="doc.config_id.name"/></div>
-                        </div> 
+                            <div class="col-4"><strong>Outlet  : </strong> <span t-esc="doc.config_id.name + '/' + doc.name"/></div>
+                        </div>
                         <table class="table table-sm o_main_table table-bordered">
                             <thead style="display: table-row-group">
                                 <tr>
@@ -38,7 +38,7 @@
                                     <th class="text-center col-2">Setor</th>
                                     <th class="text-center col-2">Nilai Transaksi</th>
                                     <th class="text-center col-2">Selisih</th>
-                                    
+                                    <th class="text-center col-2">Keterangan</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -49,6 +49,7 @@
                                     <td class="text-end"><span t-esc="'{:,.2f}'.format(line.get('deposit', 0.0))"/></td>
                                     <td class="text-end"><span t-esc="'{:,.2f}'.format(line.get('transaction', 0.0))"/></td>
                                     <td class="text-end"><span t-esc="'{:,.2f}'.format(line.get('diff', 0.0))"/></td>
+                                    <td></td>
                                 </tr>
                             </tbody>
                         </table>
@@ -63,7 +64,7 @@
                                         Diserahkan Oleh, <br/><br/><br/><br/><br/><br/><br/><br/>
                                         (__________________)
                                     </td>
-                                    
+
                                 </tr>
                         </table>
                         <div class="row">
@@ -71,12 +72,12 @@
                                 <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%A, %d %B %Y %H:%M')"/>
                             </div>
                         </div>
-                        
 
+                    <p style="page-break-before:always;"> </p>
                     </t>
                 </div>
             </t>
-            
+
         </template>
 
         <record id="paperformat_euro_narrow_margin_a4" model="report.paperformat">

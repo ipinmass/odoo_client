@@ -10,7 +10,6 @@
                     <td class="pull-left" style="width: 32%">
                         <span t-field="doc.order_type"/>
                     </td>
-                    
                     <td rowspan="3" style="width:50%"><strong>Description :</strong> <br/> <span t-field="doc.description"/> </td>
                 </tr>
                 <tr>
