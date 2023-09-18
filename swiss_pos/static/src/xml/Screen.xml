@@ -41,7 +41,8 @@
                     type="number"
                     t-att-value="line.card_number"
                     id="input-card-number"
-                    t-on-keyup="() => this.trigger('update-payment-card-no', { cid: line.cid })">
+                    t-on-keyup="() => this.trigger('update-payment-card-no', { cid: line.cid })"
+                    style="font-size: larger;">
                     </input>
             </div>
         </xpath>
