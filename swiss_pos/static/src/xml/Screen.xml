@@ -2,6 +2,19 @@
 <templates id="template1" xml:space="preserve">
 
     <t t-name="swiss_pos.OrderReceipt" t-inherit="point_of_sale.OrderReceipt" t-inherit-mode="extension" owl="1">
+        <xpath expr="//t[@t-if='receipt.company.logo']" position="replace">
+             <t t-if="env.pos.config.receipt_logo">
+                <img class="pos-receipt-logo" t-attf-src="data:image/*;base64,{{env.pos.config.receipt_logo}}" alt="Logo"/>
+                <br/>
+            </t>
+            <t t-if="!env.pos.config.receipt_logo">
+                <h2 class="pos-receipt-center-align">
+                    <t t-esc="receipt.company.name" />
+                </h2>
+                <br/>
+            </t>
+        </xpath>
+        <xpath expr="//t[@t-if='!receipt.company.logo']" position="replace"/>
         <xpath expr="//div[hasclass('pos-receipt')]/div[hasclass('pos-receipt-order-data')]" position="replace"/>
         <xpath expr="//div[hasclass('pos-receipt')]//div[hasclass('pos-receipt-contact')]" position="replace">
             <div class="pos-receipt-contact">

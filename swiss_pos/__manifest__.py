@@ -1,5 +1,5 @@
 ###################################################################################
-# 
+#
 #    Copyright (C) Cetmix OÜ
 #
 #    This program is free software: you can redistribute it and/or modify
@@ -21,7 +21,7 @@
     "name": "POS swiss",
     "version": "16.0.0",
     "summary": """
-    
+
 """,
     "author": "Ipin",
     "category": "Productivity",
@@ -34,7 +34,9 @@
     'data':[
         'views/session_views.xml',
         'views/payment_method.xml',
+        'views/pos_config_view.xml',
         'report/report_cashier.xml',
+
         ],
     "images": [],
     'assets': {
