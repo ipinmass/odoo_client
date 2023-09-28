@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+     <record id="report_sales_detail_paper_swiss" model="report.paperformat">
+        <field name="name">Ppaperformat Swiss Sales Details</field>
+        <field name="default" eval="False"/>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">1000</field>
+        <field name="page_width">80</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">8</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="dpi">96</field>
+    </record>
+
+    <template id="report_saledetail_session">
+    <t t-set="company" t-value="env.company"/>
+    <t t-call="web.html_container">
+    <t t-call="web.internal_layout">
+        <div class="page">
+             <div class="text-center">
+                <t t-set="headers_list" t-value="report_header.split('\n')"/>
+                <t t-foreach="range(0, len(headers_list))" t-as="h">
+                    <span t-esc="headers_list[h]" t-if="h==0" style="font-size: 18px; font-weigth: bold;"/>
+                    <span t-esc="headers_list[h]" t-if="h!=0"/>
+                    <br/>
+                </t>
+                <div class="text-center">----------------------------</div>
+                <div class="text-center">
+                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d/%H:%M')"/>
+                </div>
+                <div class="text-center">
+                    Sales Summary: <span t-esc="config_name"/><br/>
+                    Session: <span t-esc="session_name"/><br/>
+                    Cashier: <span t-esc="cashier_name"/>
+
+                </div>
+            </div>
+            <table class="table table-lg m-0 mt-2 table-borderless border border-end-0 border-start-0 border-info">
+                <thead>
+                    <tr>
+                        <th>Qty</th>
+                        <th>Brutto</th>
+                        <th>Disc.</th>
+                        <th>Netto</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <t t-set="total0" t-value="0"/>
+                    <t t-set="total1" t-value="0"/>
+                    <t t-set="total2" t-value="0"/>
+                    <t t-set="total3" t-value="0"/>
+                    <t t-foreach="categ_solds" t-as="cat">
+                        <t t-set="total0" t-value="total0+categ_solds[cat][0]"/>
+                        <t t-set="total1" t-value="total0+categ_solds[cat][1]"/>
+                        <t t-set="total2" t-value="total0+categ_solds[cat][2]"/>
+                        <t t-set="total3" t-value="total0+categ_solds[cat][3]"/>
+                        <tr >
+                            <td colspan="4"><span t-esc="cat[1]"/></td>
+                        </tr>
+                        <tr >
+                            <td><span t-esc="categ_solds[cat][0]"/></td>
+                            <td><span t-esc="categ_solds[cat][1]" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
+                            <td><span t-esc="categ_solds[cat][2]" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
+                            <td><span t-esc="categ_solds[cat][3]" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
+
+                        </tr>
+                    </t>
+                    <tr>
+                        <td colspan="4" class="text-center"><strong>Totals</strong></td>
+                    </tr>
+                    <tr>
+                        <td><span t-esc="total0"/></td>
+                        <td><span t-esc="total1" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
+                        <td><span t-esc="total2" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
+                        <td><span t-esc="total3" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div class="text-center mt-4">
+
+                <div class="text-center">
+                    <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d/%H:%M')"/>
+                </div>
+                <div class="text-center">
+                    Payment Summary: <span t-esc="config_name"/><br/>
+                    Session: <span t-esc="session_name"/><br/>
+                    Cashier: <span t-esc="cashier_name"/>
+                </div>
+            </div>
+            <table class="table table-lg m-0 mt-2 table-borderless border border-end-0 border-start-0 border-info">
+                <thead><tr>
+                    <th>Name</th>
+                    <th>Total</th>
+                </tr></thead>
+                <tbody>
+                <tr t-foreach='payments' t-as='payment'>
+                    <td><t t-esc="payment['name']" /></td>
+                    <td><t t-esc="payment['total']" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
+                </tr>
+                </tbody>
+            </table>
+            <table class="table table-lg m-0 mt-2 table-borderless border border-end-0 border-start-0 border-top-0 border-info">
+                <tr>
+                    <td>Total Payment</td>
+                    <td>:</td>
+                    <td><t t-esc="total_payment" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
+                </tr>
+                <tr>
+                    <td>Total Cash</td>
+                    <td>:</td>
+                    <td><t t-esc="cash_total" t-options="{'widget': 'float', 'precision': currency_precision}"/></td>
+                </tr>
+            </table>
+        </div>
+    </t>
+    </t>
+    </template>
+
+    <record id="sale_details_report" model="ir.actions.report">
+        <field name="name">Sales Details</field>
+        <field name="model">pos.session</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">swiss_pos.report_saledetail_session</field>
+        <field name="paperformat_id" ref="report_sales_detail_paper_swiss"/>
+    </record>
+
+</data>
+</openerp>

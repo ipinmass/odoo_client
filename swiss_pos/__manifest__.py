@@ -36,6 +36,7 @@
         'views/payment_method.xml',
         'views/pos_config_view.xml',
         'report/report_cashier.xml',
+        'report/report_saledetails.xml',
 
         ],
     "images": [],
