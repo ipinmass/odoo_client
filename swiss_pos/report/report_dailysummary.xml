@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+
+        <template id="report_dailysummary">
+            <t t-call="web.basic_layout">
+                <div class="page">
+                    <span t-esc="test"/>
+                </div>
+            </t>
+        </template>
+        <record id="action_report_dailysummary" model="ir.actions.report">
+            <field name="name">Report Store Summary</field>
+            <field name="model">pos.session</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">swiss_pos.report_dailysummary</field>
+            <field name="report_file">swiss_pos.report_dailysummary</field>
+        </record>
+</data>
+</odoo>

@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+     <record id="report_posreprint_paper_swiss" model="report.paperformat">
+        <field name="name">Ppaperformat Swiss Sales Details</field>
+        <field name="default" eval="False"/>
+        <field name="disable_shrinking" eval="True"/>
+        <field name="format">custom</field>
+        <field name="page_height">1000</field>
+        <field name="page_width">80</field>
+        <field name="orientation">Portrait</field>
+        <field name="margin_top">0</field>
+        <field name="margin_bottom">8</field>
+        <field name="margin_left">0</field>
+        <field name="margin_right">0</field>
+        <field name="dpi">96</field>
+    </record>
+
+    <record id="action_report_saleorder" model="ir.actions.report">
+        <field name="name">Reprint Receipt</field>
+        <field name="model">pos.order</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">swiss_pos.report_posreprint</field>
+        <field name="report_file">swiss_pos.report_posreprint</field>
+        <field name="print_report_name">'Reprint  - %s' % (object.name)</field>
+        <field name="binding_model_id" ref="model_pos_order"/>
+        <field name="paperformat_id" ref="report_posreprint_paper_swiss"/>
+        <field name="binding_type">report</field>
+    </record>
+    <template id="report_posreprint">
+        <t t-call="web.html_container">
+        <t t-call="web.basic_layout">
+            <div class="page">
+
+                <div class="text-center"></div>
+
+            </div>
+        </t>
+        </t>
+
+    </template>
+</data>
+</openerp>

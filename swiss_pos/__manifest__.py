@@ -35,8 +35,12 @@
         'views/session_views.xml',
         'views/payment_method.xml',
         'views/pos_config_view.xml',
+        'wizards/daily_summary.xml',
         'report/report_cashier.xml',
         'report/report_saledetails.xml',
+        'report/reprint_order.xml',
+        'report/report_dailysummary.xml',
+        'security/ir.model.access.csv'
 
         ],
     "images": [],

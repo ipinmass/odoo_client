@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="act_store_daily_summary" model="ir.actions.act_window">
+        <field name="name">Report Daily Summary</field>
+        <field name="res_model">store.daily.summary</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <record id="view_store_daily_summary_form" model="ir.ui.view">
+        <field name="name">Report Daily Summar</field>
+        <field name="model">store.daily.summary</field>
+        <field name="arch" type="xml">
+            <form>
+                <footer>
+                    <button name="print_report" string="Print" type="object" class="btn-primary" data-hotkey="q"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z" />
+                </footer>
+            </form>
+        </field>
+    </record>
+    <menuitem
+    id="menu_store_dailysummary" name="Daily Summary" action="act_store_daily_summary" parent="point_of_sale.menu_point_rep" sequence="99"/>
+</odoo>

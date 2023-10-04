@@ -1,0 +1,3 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_report_swiss_pos_report_dailysummary,report.swiss_pos.report_dailysummary,model_report_swiss_pos_report_dailysummary,base.group_user,1,1,1,0
+access_store_daily_summary,access.store_daily_summary,model_store_daily_summary,base.group_user,1,1,1,0
