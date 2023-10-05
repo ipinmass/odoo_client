@@ -11,15 +11,66 @@
                                 <div> <t t-esc="report_header" class="col-md-4 m-3"/> </div>
                             </td>
                             <td>
-                               
                             </td>
                         </tr>
                     </table>
                     <div class="row">
                         <div class="text-center" style="font-size: 24px; font-weight:bold">BUKTI STORAN TOKO</div>
                     </div>
+                    <div class="row mt-4 col-12">
+                        <div class="col-4"><strong>Tanggal: </strong> <span t-esc="date"/></div>
+                        <div class="col-4"><strong>Outlet  : </strong> <span t-esc="store"/></div>
+                    </div>
+                    <table class="table table-sm o_main_table table-bordered">
+                            <thead style="display: table-row-group">
+                                <tr>
+                                    <th class="text-center" style="width: 5%">No</th>
+                                    <th class="text-center">Kode Bayar</th>
+                                    <th class="text-center col-3">Nama Bayar</th>
+                                    <th class="text-center col-2">Setoran Kasir</th>
+                                    <th class="text-center col-2">Pembayaran (Sales)</th>
+                                    <th class="text-center col-2">Total Setoran</th>
+                                    <th class="text-center col-2">Keterangan</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <t t-set="line_no" t-value="0"/>
+                                <tr t-foreach="paymentlines.keys()" t-as="payment">
+                                    <t t-set="line_no" t-value="line_no + 1"/>
+                                    <td><span t-esc="line_no"/></td>
+                                    <td><span></span></td>
+                                    <td><span t-esc="payment"/></td>
+                                    <td class="text-end"><span t-esc="'{:,.2f}'.format(paymentlines[payment][0])"/></td>
+                                    <td class="text-end"><span t-esc="'{:,.2f}'.format(paymentlines[payment][1])"/></td>
+                                    <td class="text-end"><span t-esc="'{:,.2f}'.format(paymentlines[payment][0] + paymentlines[payment][1])"/></td>
+                                    <td></td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <table class="table table-sm o_main_table table-borderless mt-4">
+                                <tr>
+                                    <td class="col-6 text-center">
+                                        Diterima Oleh, <br/><br/><br/><br/><br/><br/><br/><br/>
+                                        (__________________)
+                                    </td>
+                                    <td class="col-6 text-center">
+                                        Diserahkan Oleh, <br/><br/><br/><br/><br/><br/><br/><br/>
+                                        (__________________)
+                                    </td>
+
+                                </tr>
+                        </table>
+                        <div class="row">
+                            <div class="text-end col-12">
+                                <span t-esc="context_timestamp(datetime.datetime.now()).strftime('%A, %d %B %Y %H:%M')"/>
+                            </div>
+                        </div>
+
+                    <p style="page-break-before:always;"> </p>
                 </div>
-                
+
+
             </t>
         </template>
         <record id="action_report_dailysummary" model="ir.actions.report">

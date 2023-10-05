@@ -12,7 +12,10 @@
         <field name="model">store.daily.summary</field>
         <field name="arch" type="xml">
             <form>
-                <field name="date" required="1"/>
+                <group>
+                    <field name="date" required="1"/>
+                    <field name="warehouse_id" required="1"/>
+                </group>
                 <notebook>
                     <page string="Sessions">
                         <field name="session_ids">

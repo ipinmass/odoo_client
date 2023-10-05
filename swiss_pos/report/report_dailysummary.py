@@ -26,19 +26,28 @@ class ReportSaleDetails(models.AbstractModel):
 
     @api.model
     def get_sale_details(self, data):
-        session_ids = self.env['pos.session'].browse(data.get('session_ids'))
-        payment_ids = self.env['account.payment'].browse(data.get('payment_ids'))
+        session_ids = self.env['pos.session'].browse(data.get('form',{}).get('session_ids'))
+        payment_ids = self.env['account.payment'].browse(data.get('form', {}).get('payment_ids'))
 
         receipt_header = session_ids.mapped('config_id.receipt_header')
         receipt_header = receipt_header and receipt_header[0] or 'None'
-        print('receiptheader==========', receipt_header)
-
+        paymentlines = {}
+        for session in session_ids:
+            for pospayment in self.env['pos.payment'].search([('session_id', '=', session.id)]):
+                if pospayment.payment_method_id.journal_id.name in paymentlines:
+                    paymentlines[pospayment.payment_method_id.journal_id.name][0] += pospayment.amount
+                else:
+                    paymentlines[pospayment.payment_method_id.journal_id.name] = [pospayment.amount, 0.0]
+        for salepayment in payment_ids:
+            if salepayment.journal_id.name in paymentlines:
+                paymentlines[salepayment.journal_id.name][1] += salepayment.amount
+            else:
+                paymentlines[salepayment.journal_id.name] = [0.0, salepayment.amount]
         return {
             'report_header': receipt_header,
-            'date': '',
-            'store': '',
-            'paymentlines': [{
-            }]
+            'date': data.get('form', {}).get('date'),
+            'store': self.env['stock.warehouse'].browse(data.get('form', {}).get('warehouse_id')).display_name,
+            'paymentlines': paymentlines
         }
 
     @api.model
