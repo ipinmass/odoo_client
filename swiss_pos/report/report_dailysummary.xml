@@ -5,8 +5,21 @@
         <template id="report_dailysummary">
             <t t-call="web.basic_layout">
                 <div class="page">
-                    <span t-esc="test"/>
+                    <table class="table table-sm o_main_table table-borderless">
+                        <tr>
+                            <td>
+                                <div> <t t-esc="report_header" class="col-md-4 m-3"/> </div>
+                            </td>
+                            <td>
+                               
+                            </td>
+                        </tr>
+                    </table>
+                    <div class="row">
+                        <div class="text-center" style="font-size: 24px; font-weight:bold">BUKTI STORAN TOKO</div>
+                    </div>
                 </div>
+                
             </t>
         </template>
         <record id="action_report_dailysummary" model="ir.actions.report">
@@ -15,6 +28,7 @@
             <field name="report_type">qweb-pdf</field>
             <field name="report_name">swiss_pos.report_dailysummary</field>
             <field name="report_file">swiss_pos.report_dailysummary</field>
+            <field name="paperformat_id" ref="paperformat_euro_narrow_margin_a4"/>
         </record>
 </data>
 </odoo>

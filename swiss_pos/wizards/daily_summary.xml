@@ -12,10 +12,33 @@
         <field name="model">store.daily.summary</field>
         <field name="arch" type="xml">
             <form>
+                <field name="date" required="1"/>
+                <notebook>
+                    <page string="Sessions">
+                        <field name="session_ids">
+                            <tree>
+                                <field name="name"/>
+                                <field name="start_at"/>
+                                <field name="stop_at"/>
+                            </tree>
+                        </field>
+                    </page>
+                    <page string="Sale Payments">
+                        <field name="payment_ids">
+                            <tree>
+                                <field name="name"/>
+                                <field name="date"/>
+                                <field name="journal_id"/>
+                                <field name="amount"/>
+                            </tree>
+                        </field>
+                    </page>
+                </notebook>
                 <footer>
                     <button name="print_report" string="Print" type="object" class="btn-primary" data-hotkey="q"/>
                     <button string="Cancel" class="btn-secondary" special="cancel" data-hotkey="z" />
                 </footer>
+                
             </form>
         </field>
     </record>

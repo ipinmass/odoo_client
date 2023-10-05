@@ -25,12 +25,16 @@ class ReportSaleDetails(models.AbstractModel):
 
 
     @api.model
-    def get_sale_details(self):
+    def get_sale_details(self, data):
+        session_ids = self.env['pos.session'].browse(data.get('session_ids'))
+        payment_ids = self.env['account.payment'].browse(data.get('payment_ids'))
 
+        receipt_header = session_ids.mapped('config_id.receipt_header')
+        receipt_header = receipt_header and receipt_header[0] or 'None'
+        print('receiptheader==========', receipt_header)
 
         return {
-            'test': 123,
-            'report_header': '',
+            'report_header': receipt_header,
             'date': '',
             'store': '',
             'paymentlines': [{
@@ -41,5 +45,5 @@ class ReportSaleDetails(models.AbstractModel):
     def _get_report_values(self, docids, data=None):
         data = dict(data or {})
 
-        data.update(self.get_sale_details())
+        data.update(self.get_sale_details(data))
         return data
