@@ -3,7 +3,7 @@
     "name": "Swiss Sales Modifier",
     "version": "16.0.0",
     "summary": """
-    
+     
 """,
     "author": "Ipin",
     "category": "Sales",
